@@ -1,0 +1,31 @@
+# Custom apt-install completion, based on: {
+#   Debian apt-get(8) completion                             -*- shell-script -*-
+# }
+# adapted by Lucas Gassert
+
+_apt_install()
+{
+    local cur prev words cword
+    _init_completion || return
+
+    if [[ "$cur" == -* ]]; then
+        COMPREPLY=( $( compgen -W '-d -f -h -v -m -q -s -y -u -t -b -c -o
+            --download-only --fix-broken --help --version --ignore-missing
+            --fix-missing --no-download --quiet --simulate --just-print
+            --dry-run --recon --no-act --yes --assume-yes --show-upgraded
+            --only-source --compile --build --ignore-hold --target-release
+            --no-upgrade --force-yes --print-uris --purge --reinstall
+            --list-cleanup --default-release --trivial-only --no-remove
+            --diff-only --no-install-recommends --tar-only --config-file
+            --option --auto-remove' -- "$cur" ) )
+
+            return 0
+    fi
+
+    COMPREPLY=( $( apt-cache --no-generate pkgnames "$cur" 2> /dev/null ) )
+
+    return 0
+} &&
+complete -F _apt_install apt-install
+
+# ex: ts=4 sw=4 et filetype=sh

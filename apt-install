@@ -1,0 +1,10 @@
+#!/bin/bash
+
+APT="apt-get"
+USR="whoami"
+
+if [ $USR != "root" ]; then
+    APT="sudo $APT"
+fi
+
+sudo apt-get install "$@"
