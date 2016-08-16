@@ -7,4 +7,5 @@ if [ $USR != "root" ]; then
     APT="sudo $APT"
 fi
 
-$APT install "$@"
+$APT update
+$APT upgrade
